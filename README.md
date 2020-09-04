@@ -5,8 +5,8 @@ Concept for our retro decor and apparel shopping site.
 ### Emma Harthun
 ### Bradley Breedlove
 ### Trey McGarity
-
+##
 ## Three Conceptual Parts:
-React w/ Redux Client
-Node w/ Express Server
-PostgreSQL DataBase
+React w/ Redux Client <br>
+Node w/ Express Server <br>
+PostgreSQL DataBase <br>
