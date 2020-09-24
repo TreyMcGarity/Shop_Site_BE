@@ -1,5 +1,5 @@
 # ShoppingSite
-Concept for our retro decor and apparel shopping site.
+Concept for our retro decor and apparel shopping site. (on hold atm)
 
 ## Creators:
 ### Emma Harthun
