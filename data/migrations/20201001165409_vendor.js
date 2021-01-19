@@ -1,5 +1,5 @@
 
-exports.up = function(knex) {
+exports.up = async function(knex) {
 	return knex.schema.createTable("vendor", (tbl) => {
 		tbl.uuid("id").primary().defaultTo(knex.raw("uuid_generate_v4()"));
 		tbl.string("first_name", 20).notNull();
@@ -17,6 +17,6 @@ exports.up = function(knex) {
 	});
 };
 
-exports.down = function(knex) {
+exports.down = async function(knex) {
     await knex.schema.dropTableIfExists("vendor");
 };
