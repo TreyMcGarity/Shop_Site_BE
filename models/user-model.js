@@ -7,11 +7,43 @@ class UserModel {
    
     // userType aids in specifing with database to access
 
-    // getUserByEmail(email, userType = 'patron') 
-
-    // getUserByPhone(phone, userType = 'patron')
-
-    // getUserById(id, userType = 'patron')
+    async getUserByEmail(email, userType = 'patron') {
+        try {
+          const user = await db(userType)
+            .where('email', email.toLowerCase())
+            .first();
+          return user;
+        } catch (error) {
+          throw error;
+        }
+      }
+    
+      async getUserByPhone(number, userType = 'patron') {
+        try {
+          const user = await db(userType).where('phone', number).first();
+          return user;
+        } catch (error) {
+          throw error;
+        }
+      }
+    
+      async getUserById(id, userType = 'patron') {
+        try {
+          if (userType === 'patron') {
+            return await db
+              .select('*')
+              .from('patron')
+              .where('patron.id', id)
+              .then((data) => {
+                info = data;
+                return data;
+              })
+          }
+          return await db(userType).where({ id }).first();
+        } catch (error) {
+          throw error;
+        }
+    }
 }
 
 module.exports = new UserModel()
