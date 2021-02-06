@@ -44,6 +44,19 @@ class UserModel {
           throw error;
         }
     }
+    
+    async getAllUsersByType(user_type) {
+      try {
+        return await db(user_type).select(
+          'id',
+          'first_name',
+          'last_name',
+          'email'
+        );
+      } catch (error) {
+        throw error;
+      }
+    }
 }
 
 module.exports = new UserModel()

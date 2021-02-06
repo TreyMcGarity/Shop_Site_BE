@@ -9,8 +9,7 @@ class PatronModel extends UserModel {
    
     async getPatrons() {
         try {
-            const patron = await db('patron')
-                .where('patron', patron)
+            return await this.getAllUsersByType('patron');
         } catch (error) {
             throw error;
         }
@@ -29,27 +28,41 @@ class PatronModel extends UserModel {
 
     async addPatron(data) {
         try {
-            return await db
-            .then(() => {
-                return data
-            }) 
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async updatePatron(id, data) {
-        try {
-            const patron = await getUserById(id, 'patron')
-            .then(() => {
-                return patron
+            await db('patron').insert({
+                first_name: data.first_name,
+                last_name: data.last_name,
+                email: data.email.toLowerCase(),
+                phone: data.phone,
+                dob: data.dob,
+                password: data.password,
+                gender: data.gender
             })
         } catch (error) {
             throw error;
         }
     }
 
-    // deletePatron(id)
+    async updatePatron(id, updatedData) {
+        try{
+            await db('patron')
+                   .where({id: id})
+                   .update(updatedData)
+                   .then(data => data);
+            return await this.getUserById(id);
+    } catch(err){
+            throw err;
+        }
+    }
+
+    async deletePatron(id){
+        try{
+            return await db('patron')
+                         .where({id})
+                         .del();
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 
 module.exports = new PatronModel();
