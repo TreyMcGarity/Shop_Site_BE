@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
 const user_db = require('../models/user-model')
 const patron_db = require('../models/patron-model')
-const vendor_db = require('../models/ vendor-model')
+const vendor_db = require('../models/vendor-model')
 const product_db = require('../models/product-model')
 
 router.use('/products', product_db);
@@ -13,7 +13,7 @@ router.use('/products', product_db);
 //     try {
 
 //     } catch(err) {
-//         next(err)
+//         throw err
 //     }
 // })
 
@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
         if(!products.length) res.status(404).json('No items found')
         res.status(200).json(products)
     } catch(err) {
-        next(err)
+        throw err
     }
 })
 
@@ -35,7 +35,7 @@ router.get('/:id', async (req, res, next) => {
         if(!product.id) return res.status(404).json('No item found')
         res.status(200).json(product)
     } catch(err) {
-        next(err)
+        throw err
     }
 })
 
