@@ -39,4 +39,4 @@ class ProductModel {
     }
 }
 
-module.exports = ProductModel;
+module.exports = new ProductModel();
