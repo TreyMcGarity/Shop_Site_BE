@@ -6,7 +6,6 @@ const patron_db = require('../models/patron-model')
 const vendor_db = require('../models/vendor-model')
 const product_db = require('../models/product-model')
 
-router.use('/products', product_db);
 
 /* Create Product route */
 // router.get('/', async (req, res, next) => {
@@ -60,3 +59,5 @@ router.get('/:id', async (req, res, next) => {
 //       next(error);
 //     }
 //   })
+
+module.exports = router;

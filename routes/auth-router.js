@@ -28,3 +28,5 @@ router.post('/logout', async (req, res, next) => {
         throw err
     }
 })
+
+module.exports = router;
