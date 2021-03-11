@@ -4,7 +4,7 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
-// server.use("/api", require("./routes/router-index"));
+server.use("/api", require("./routes/router-index"));
 
 server.get('/', (req, res) => {
     res.send(`Welcome to the party!`);
