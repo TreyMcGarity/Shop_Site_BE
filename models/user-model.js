@@ -1,4 +1,5 @@
 const db = require('../data/db_config')
+const jwt = require('jsonwebtoken');
 
 class UserModel {
     /* General methods for all user types.
@@ -56,6 +57,10 @@ class UserModel {
       } catch (error) {
         throw error;
       }
+    }
+
+    async generateToken(id, user_type) {
+      
     }
 }
 
