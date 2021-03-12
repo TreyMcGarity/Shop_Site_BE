@@ -7,19 +7,19 @@ const vendor_db = require('../models/vendor-model')
 const product_db = require('../models/product-model')
 
 
-/* Create Product route */
-// router.get('/', async (req, res, next) => {
-//     try {
+/* Create Patron route */
+router.post('/', async (req, res, next) => {
+    try {
 
-//     } catch(err) {
-//         throw err
-//     }
-// })
+    } catch(err) {
+        throw err
+    }
+})
 
-/* Get Product routes */
+/* Get Patron routes */
 router.get('/', async (req, res, next) => {
     try {
-        const patrons = await product_db.getAllpatrons()
+        const patrons = await patron_db.getAllpatrons()
         if(!patrons.length) res.status(404).json('No items found')
         res.status(200).json(patrons)
     } catch(err) {
@@ -30,34 +30,34 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     try {
         const id = req.id
-        const product = await product_db.getProductByID(id)
-        if(!product.id) return res.status(404).json('No item found')
-        res.status(200).json(product)
+        const patron = await patron_db.getpatronByID(id)
+        if(!patron.id) return res.status(404).json('No item found')
+        res.status(200).json(patron)
     } catch(err) {
         throw err
     }
 })
 
-/* Edit Product routes */
-// router.put('/:id', async (req, res, next) => {
-//     try {
-//       const changes = req.body;
-//       res.json(await coachDB.updateCoachByID(req.params.id, changes));
-//     } catch (error) {
-//       throw err
-//     }
-//   })
+/* Edit Patron routes */
+router.put('/:id', async (req, res, next) => {
+    try {
+      const changes = req.body;
+      res.json(await coachDB.updateCoachByID(req.params.id, changes));
+    } catch (error) {
+      throw err
+    }
+  })
 
-//   router.delete('/:id', async (req, res, next) => {
-//     try {
-//       await coachDB.deleteCoach(req.params.id);
-//       req.session.destroy();
-//       return res
-//         .clearCookie('token')
-//         .json({ message: 'Coach Account was deleted. Logged out Successfully.' });
-//     } catch (error) {
-//       throw err
-//     }
-//   })
+  router.delete('/:id', async (req, res, next) => {
+    try {
+      await coachDB.deleteCoach(req.params.id);
+      req.session.destroy();
+      return res
+        .clearCookie('token')
+        .json({ message: 'Coach Account was deleted. Logged out Successfully.' });
+    } catch (error) {
+      throw err
+    }
+  })
 
 module.exports = router;

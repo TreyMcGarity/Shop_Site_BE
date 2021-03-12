@@ -8,13 +8,13 @@ const product_db = require('../models/product-model')
 
 
 /* Create Product route */
-// router.get('/', async (req, res, next) => {
-//     try {
+router.post('/', async (req, res, next) => {
+    try {
 
-//     } catch(err) {
-//         throw err
-//     }
-// })
+    } catch(err) {
+        throw err
+    }
+})
 
 /* Get Product routes */
 router.get('/', async (req, res, next) => {
@@ -39,25 +39,25 @@ router.get('/:id', async (req, res, next) => {
 })
 
 /* Edit Product routes */
-// router.put('/:id', async (req, res, next) => {
-//     try {
-//       const changes = req.body;
-//       res.json(await coachDB.updateCoachByID(req.params.id, changes));
-//     } catch (error) {
-//       next(error);
-//     }
-//   })
+router.put('/:id', async (req, res, next) => {
+    try {
+      const changes = req.body;
+      res.json(await coachDB.updateCoachByID(req.params.id, changes));
+    } catch (error) {
+      next(error);
+    }
+  })
 
-//   router.delete('/:id', async (req, res, next) => {
-//     try {
-//       await coachDB.deleteCoach(req.params.id);
-//       req.session.destroy();
-//       return res
-//         .clearCookie('token')
-//         .json({ message: 'Coach Account was deleted. Logged out Successfully.' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   })
+  router.delete('/:id', async (req, res, next) => {
+    try {
+      await coachDB.deleteCoach(req.params.id);
+      req.session.destroy();
+      return res
+        .clearCookie('token')
+        .json({ message: 'Coach Account was deleted. Logged out Successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  })
 
 module.exports = router;

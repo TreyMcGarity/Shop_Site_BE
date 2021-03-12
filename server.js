@@ -7,7 +7,7 @@ server.use(express.json());
 server.use("/api", require("./routes/router-index"));
 
 server.get('/', (req, res) => {
-    res.send(`Welcome to the party!`);
+    res.send(` -- DECOREM -- BackEnd is up `);
   });
 
 server.use((err, req, res, next) => {
