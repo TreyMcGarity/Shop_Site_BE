@@ -20,7 +20,7 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
     try {
         const patrons = await patron_db.getAllpatrons()
-        if(!patrons.length) res.status(404).json('No items found')
+        if(!patrons.length) res.status(404).json('No patrons found')
         res.status(200).json(patrons)
     } catch(err) {
         throw err

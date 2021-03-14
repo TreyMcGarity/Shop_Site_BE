@@ -19,10 +19,9 @@ router.post('/', async (req, res, next) => {
 /* Get Product routes */
 router.get('/', async (req, res, next) => {
     try {
-        res.send(`Vendors`);
-        // const vendors = await vendor_db.getAllvendors()
-        // if(!vendors.length) res.status(404).json('No items found')
-        // res.status(200).json(vendors)
+        const vendors = await vendor_db.getAllvendors()
+        if(!vendors.length) res.status(404).json('No vendors found')
+        res.status(200).json(vendors)
     } catch(err) {
         throw err
     }
