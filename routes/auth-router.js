@@ -16,10 +16,10 @@ router.post('/register', async (req, res, next) => {
         // check if data is tied to account already
         if (userEmail) return res.status(409).json('There is an account with this email already');
         if (userPhone) return res.status(409).json('There is an account with this number already');
-        
+        console.log(req)
         // depending on user_type add to that database
         switch (user_type) {
-            case 'client':
+            case 'patron':
                 await patron_db.addPatron({
                     ...req.body,
                     password: hashedPassword
@@ -31,7 +31,7 @@ router.post('/register', async (req, res, next) => {
                 })
                 return res,json('success');
             default:
-                throw new httpError(400, "invalid user_type attribute cannot process request")
+                throw new httpError(400, "invalid attribute(s) cannot process request")
         }
 	} catch(err) {
 		next(err)
@@ -48,7 +48,7 @@ router.post('/login', async (req, res, next) => {
 
         // check if input valid
 		if (!user) {
-			return res.status(401).json({ message: "Invalid user" })
+			return res.status(401).json({ message: "User doesnt exsist yet, please register user" })
 		}	
 		if (!passwordValid) {
 			return res.status(401).json({ message: "Invalid password" })
@@ -68,5 +68,7 @@ router.post('/logout', async (req, res, next) => {
 		next(error);
 	}
 })
+
+router.get('/verify_session', access.protected, (req, res) => res.status(200).json('Verified'));
 
 module.exports = router;
