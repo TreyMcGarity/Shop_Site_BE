@@ -69,6 +69,6 @@ router.post('/logout', async (req, res, next) => {
 	}
 })
 
-router.get('/verify_session', access.protected, (req, res) => res.status(200).json('Verified'));
+router.get('/verify_session', (req, res) => res.status(200).json('Verified'));
 
 module.exports = router;
