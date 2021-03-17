@@ -8,11 +8,16 @@ class UserModel {
    
     // userType aids in specifing with database to access
 
+    async getBy(filter) {
+      return db("users")
+        .select("id", "username", "password")
+        .where(filter)
+    }
+
     async getUserByEmail(email, userType = 'patron') {
         try {
           const user = await db(userType)
-            .where('email', email.toLowerCase())
-            .first();
+            .where('email', email.toLowerCase()).first();
           return user;
         } catch (error) {
           throw error;
@@ -21,7 +26,8 @@ class UserModel {
     
       async getUserByPhone(number, userType = 'patron') {
         try {
-          const user = await db(userType).where('phone', number).first();
+          const user = await db(userType)
+            .where('phone', number).first();
           return user;
         } catch (error) {
           throw error;
@@ -59,9 +65,7 @@ class UserModel {
       }
     }
 
-    async generateToken(id, user_type) {
-      
-    }
+
 }
 
 module.exports = UserModel;
