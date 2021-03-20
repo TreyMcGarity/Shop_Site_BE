@@ -7,6 +7,7 @@ exports.up = async function(knex) {
 		tbl.string("email").unique();
 		tbl.bigInteger("phone", 10).unique();
 		tbl.date("dob");
+		tbl.string("username").notNull();
 		tbl.string("password").notNull();
 		tbl.string("profile_pic_id");
 		tbl.timestamp("created_at").defaultTo(knex.fn.now());
