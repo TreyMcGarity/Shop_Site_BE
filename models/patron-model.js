@@ -27,6 +27,7 @@ class PatronModel extends UserModel {
     }
 
     async addPatron(data) {
+        console.log(data)
         try {
             await db('patron').insert({
                 first_name: data.first_name,
@@ -34,6 +35,7 @@ class PatronModel extends UserModel {
                 email: data.email.toLowerCase(),
                 phone: data.phone,
                 dob: data.dob,
+                username: data.username,
                 password: data.password,
                 gender: data.gender
             })

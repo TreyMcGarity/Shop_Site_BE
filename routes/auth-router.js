@@ -5,31 +5,32 @@ const vendor_db = require('../models/vendor-model')
 const patron_db = require('../models/patron-model')
 const httpError = require("http-errors");
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', require("../middleware/RegisterErrorHandler")(), async (req, res, next) => {
 	try {
         // grab from request
-        const { user_type } = req.query;
-        const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
-        const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
+        const { userType } = req.body.user_type;
+        const userEmail = await patron_db.getUserByEmail(req.body.email, userType);
+        const userPhone = await patron_db.getUserByPhone(req.body.phone, userType);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
         
         // check if data is tied to account already
         if (userEmail) return res.status(409).json('There is an account with this email already');
         if (userPhone) return res.status(409).json('There is an account with this number already');
-        console.log(req)
-        // depending on user_type add to that database
-        switch (user_type) {
+
+        // depending on userType add to that database
+        switch (userType) {
             case 'patron':
                 await patron_db.addPatron({
                     ...req.body,
                     password: hashedPassword
-                })
+                });
+                return res.json('success');
             case 'vendor':
                 await vendor_db.addVendor({
                     ...req.body,
                     password: hashedPassword
-                })
-                return res,json('success');
+                });
+                return res.json('success');
             default:
                 throw new httpError(400, "invalid attribute(s) cannot process request")
         }

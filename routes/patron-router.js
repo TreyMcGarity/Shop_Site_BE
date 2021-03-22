@@ -6,16 +6,6 @@ const patron_db = require('../models/patron-model')
 const vendor_db = require('../models/vendor-model')
 const product_db = require('../models/product-model')
 
-
-/* Create Patron route */
-router.post('/', async (req, res, next) => {
-    try {
-
-    } catch(err) {
-        throw err
-    }
-})
-
 /* Get Patron routes */
 router.get('/', async (req, res, next) => {
     try {
