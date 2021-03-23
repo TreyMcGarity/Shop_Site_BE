@@ -9,9 +9,9 @@ const product_db = require('../models/product-model')
 /* Get Patron routes */
 router.get('/', async (req, res, next) => {
     try {
-        const patrons = await patron_db.getAllpatrons()
+        const patrons = await patron_db.getAllPatrons()
         if(!patrons.length) res.status(404).json('No patrons found')
-        res.status(200).json(patrons)
+        res.status(200).json({...patrons})
     } catch(err) {
         throw err
     }

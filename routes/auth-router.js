@@ -1,24 +1,25 @@
 const router = require("express").Router()
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
+const user_db = require('../models/user-model');
 const vendor_db = require('../models/vendor-model')
 const patron_db = require('../models/patron-model')
 const httpError = require("http-errors");
 
-router.post('/register', require("../middleware/RegisterErrorHandler")(), async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
 	try {
         // grab from request
-        const { userType } = req.body.user_type;
-        const userEmail = await patron_db.getUserByEmail(req.body.email, userType);
-        const userPhone = await patron_db.getUserByPhone(req.body.phone, userType);
+        const { user_type } = req.query;
+        const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
+        const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
         
         // check if data is tied to account already
         if (userEmail) return res.status(409).json('There is an account with this email already');
         if (userPhone) return res.status(409).json('There is an account with this number already');
 
-        // depending on userType add to that database
-        switch (userType) {
+        // depending on user_type add to that database
+        switch (user_type) {
             case 'patron':
                 await patron_db.addPatron({
                     ...req.body,
@@ -43,8 +44,9 @@ router.post('/login', async (req, res, next) => {
 	try {
         // grab from request
 		const { username, password } = req.body
-		const user = await Users.findBy({ username }).first()
+		const user = await user_db.getBy({ username }).first()
         const passwordValid = await bcrypt.compare(password, user.password)
+        const payload = { subject: user.id }
         const token = jwt.sign(payload, process.env.JWT_SECRET)
 
         // check if input valid

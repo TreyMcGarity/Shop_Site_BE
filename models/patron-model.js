@@ -7,7 +7,7 @@ class PatronModel extends UserModel {
     Patron's have accounts to save and purcahse items from website. 
     */
    
-    async getPatrons() {
+    async getAllPatrons() {
         try {
             return await this.getAllUsersByType('patron');
         } catch (error) {
@@ -27,7 +27,6 @@ class PatronModel extends UserModel {
     }
 
     async addPatron(data) {
-        console.log(data)
         try {
             await db('patron').insert({
                 first_name: data.first_name,
@@ -37,7 +36,7 @@ class PatronModel extends UserModel {
                 dob: data.dob,
                 username: data.username,
                 password: data.password,
-                gender: data.gender
+                gender: data.gender.toLowerCase()
             })
         } catch (error) {
             throw error;
