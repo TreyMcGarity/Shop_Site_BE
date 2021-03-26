@@ -66,6 +66,14 @@ class UserModel {
           'id',
           'first_name',
           'last_name',
+          'username',
+          'password',
+          'email',
+          'phone',
+          'dob',
+          'gender',
+          'user_type',
+          'created_at'
         );
       } catch (error) {
         throw error;
