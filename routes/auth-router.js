@@ -44,11 +44,9 @@ router.post('/login', async (req, res, next) => {
 	try {
         // grab from request
 		const { username, password } = req.body
-		const user = await user_db.getBy({ username }).first()
+		const user = await user_db.findBy({ username }).first()
         const passwordValid = await bcrypt.compare(password, user.password)
-        const payload = { subject: user.id }
-        const token = jwt.sign(payload, process.env.JWT_SECRET)
-
+        const token = user_db.generateToken(user);
         // check if input valid
 		if (!user) {
 			return res.status(401).json({ message: "User doesnt exsist yet, please register user" })
@@ -56,8 +54,8 @@ router.post('/login', async (req, res, next) => {
 		if (!passwordValid) {
 			return res.status(401).json({ message: "Invalid password" })
 		}
-		res.status(200).cookie("token", token)
-            .json({ message: `Welcome ${user.username}`, token: token })
+		res.status(200)
+            .json({ message: `Welcome ${user.username}`, token })
 	} catch(err) {
 		next(err)
 	}

@@ -11,7 +11,7 @@ server.get('/', (req, res) => {
   });
 
 server.use((err, req, res, next) => {
-    console.log(err)
+    console.log(" -----------------------\n\n Error:",err)
     res.status(500).json({
       message: "Whoops, something went wrong",
     })

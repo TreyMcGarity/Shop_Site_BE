@@ -8,7 +8,7 @@ class UserModel {
    
     // userType aids in specifing with database to access
 
-    async getBy(filter, userType = 'patron') {
+    async findBy(filter, userType = 'patron') {
       return db(userType).where(filter);
     }
 
