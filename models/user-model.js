@@ -12,15 +12,15 @@ class UserModel {
       return db(userType).where(filter);
     }
 
-    // async getByUsername(username, userType = 'patron') {
-    //   try {
-    //     const user = await db(userType)
-    //       .where('username', username);
-    //     return user;
-    //   } catch (error) {
-    //     throw error;
-    //   }
-    // }
+    async getByUsername(username, userType = 'patron') {
+      try {
+        const user = await db(userType)
+          .where('username', username);
+        return user;
+      } catch (error) {
+        throw error;
+      }
+    }
 
     async getUserByEmail(email, userType = 'patron') {
         try {

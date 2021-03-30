@@ -10,11 +10,13 @@ router.post('/register', async (req, res, next) => {
 	try {
         // grab from request
         const { user_type } = req.query;
-        const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
-        const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
+        const userName = await user_db.getUserByUsername(req.body.username, user_type);
+        const userEmail = await user_db.getUserByEmail(req.body.email, user_type);
+        const userPhone = await user_db.getUserByPhone(req.body.phone, user_type);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
         
         // check if data is tied to account already
+        if (userName) return res.status(409).json('There is an account with this number already');
         if (userEmail) return res.status(409).json('There is an account with this email already');
         if (userPhone) return res.status(409).json('There is an account with this number already');
 
