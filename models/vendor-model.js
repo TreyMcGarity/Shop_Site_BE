@@ -6,7 +6,7 @@ class VendorModel extends UserModel {
     Owners have accounts and add products to Vendor side of App.
     */
 
-   async getVendors() {
+   async getAllVendors() {
     try {
         return await this.getAllUsersByType('vendor');
     } catch (error) {

@@ -9,7 +9,7 @@ const product_db = require('../models/product-model')
 /* Get Product routes */
 router.get('/', async (req, res, next) => {
     try {
-        const vendors = await vendor_db.getAllvendors()
+        const vendors = await vendor_db.getAllVendors()
         if(!vendors.length) res.status(404).json('No vendors found')
         res.status(200).json(vendors)
     } catch(err) {

@@ -10,9 +10,9 @@ router.post('/register', async (req, res, next) => {
 	try {
         // grab from request
         const { user_type } = req.query;
-        const userName = await user_db.getUserByUsername(req.body.username, user_type);
-        const userEmail = await user_db.getUserByEmail(req.body.email, user_type);
-        const userPhone = await user_db.getUserByPhone(req.body.phone, user_type);
+        const userName = await patron_db.getByUsername(req.body.username, user_type);
+        const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
+        const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
         
         // check if data is tied to account already
@@ -46,9 +46,9 @@ router.post('/login', async (req, res, next) => {
 	try {
         // grab from request
 		const { username, password } = req.body
-		const user = await user_db.findBy({ username }).first()
+		const user = await patron_db.findBy({ username }).first()
         const passwordValid = await bcrypt.compare(password, user.password)
-        const token = user_db.generateToken(user);
+        const token = patron_db.generateToken(user);
         // check if input valid
 		if (!user) {
 			return res.status(401).json({ message: "User doesnt exsist yet, please register user" })
