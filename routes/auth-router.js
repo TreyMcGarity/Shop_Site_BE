@@ -14,7 +14,7 @@ router.post('/register', async (req, res, next) => {
         const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
         const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
-        
+
         // check if data is tied to account already
         if (userName) return res.status(409).json('There is an account with this number already');
         if (userEmail) return res.status(409).json('There is an account with this email already');

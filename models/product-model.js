@@ -37,6 +37,28 @@ class ProductModel {
             throw error;
         }
     }
+
+    async updateProduct(id, updatedData) {
+        try{
+            await db('product')
+                .where({id: id})
+                .update(updatedData)
+                .then(data => data);
+            return await this.getUserById(id);
+    } catch(err){
+            throw err;
+        }
+    }
+
+    async deleteProduct(id){
+        try{
+            return await db('product')
+                        .where({id})
+                        .del();
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 
 module.exports = new ProductModel();
