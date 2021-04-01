@@ -38,6 +38,20 @@ class ProductModel {
         }
     }
 
+    async addProduct(data) {
+        try {
+            await db('products').insert({
+                name: data.name,
+                product_type: data.product_type,
+                details: data.details,
+                cost: data.cost,
+                stock: data.stock,
+            })
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async updateProduct(id, updatedData) {
         try{
             await db('product')

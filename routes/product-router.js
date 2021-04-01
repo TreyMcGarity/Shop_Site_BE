@@ -5,10 +5,13 @@ const product_db = require('../models/product-model')
 /* Create Product route */
 router.post('/', async (req, res, next) => {
   try {
+    const patron = await patron_db.addProduct()
 
-  } catch(err) {
+    if(!patron.id) return res.status(404).json('No item found')
+    res.status(200).json(patron)
+} catch(err) {
     throw err
-  }
+}
 })
 
 /* Get Product routes */

@@ -2,15 +2,6 @@ const router = require("express").Router()
 const patron_db = require('../models/patron-model')
 
 
-/* Create Patron route */
-router.post('/', async (req, res, next) => {
-  try {
-
-  } catch(err) {
-    throw err
-  }
-})
-
 /* Get Patron routes */
 router.get('/', async (req, res, next) => {
     try {
