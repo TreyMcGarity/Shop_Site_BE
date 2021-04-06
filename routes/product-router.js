@@ -1,14 +1,15 @@
 const router = require("express").Router()
+const { JsonWebTokenError } = require("jsonwebtoken")
 const product_db = require('../models/product-model')
 
 
 /* Create Product route */
 router.post('/', async (req, res, next) => {
   try {
-    const patron = await patron_db.addProduct()
-
-    if(!patron.id) return res.status(404).json('No item found')
-    res.status(200).json(patron)
+    const product = {...req.body}
+    if (!product.name) res.status(201).json(`creation success, but name found. product id: ${product.id}`)
+    await product_db.addProduct(product)
+    return res.json('item listed!')
 } catch(err) {
     throw err
 }
@@ -28,10 +29,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const id = req.id
-    const product = await product_db.getProductByID(id)
+    const product = await product_db.getProductByID(req.params.id)
 
-    if(!product.id) return res.status(404).json('No item found')
+    if(!product.id) res.status(404).json('No item found')
       res.status(200).json(product)
   } catch(err) {
     throw err
@@ -41,9 +41,10 @@ router.get('/:id', async (req, res, next) => {
 /* Edit Product routes */
 router.put('/:id', async (req, res, next) => {
   try {
-    const changes = req.body;
-
-    res.json(await product_db.updateProduct(req.params.id, changes));
+    const changes = {...req.body}
+    const updatedProduct = await product_db.updateProduct(req.params.id, changes)
+    
+    res.status(200).json(updatedProduct)
   } catch (error) {
     next(error);
   }

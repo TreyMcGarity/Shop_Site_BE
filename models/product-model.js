@@ -40,12 +40,12 @@ class ProductModel {
 
     async addProduct(data) {
         try {
-            await db('products').insert({
+            await db('product').insert({
                 name: data.name,
                 product_type: data.product_type,
                 details: data.details,
                 cost: data.cost,
-                stock: data.stock,
+                stock: data.stock
             })
         } catch (error) {
             throw error;
@@ -58,9 +58,8 @@ class ProductModel {
                 .where({id: id})
                 .update(updatedData)
                 .then(data => data);
-            return await this.getUserById(id);
-    } catch(err){
-            throw err;
+    } catch(error){
+            throw error;
         }
     }
 
@@ -69,8 +68,8 @@ class ProductModel {
             return await db('product')
                         .where({id})
                         .del();
-        } catch(err){
-            throw(err);
+        } catch(error){
+            throw(error);
         }
     }
 }
