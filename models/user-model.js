@@ -15,7 +15,7 @@ class UserModel {
     async getByUsername(username, userType = 'patron') {
       try {
         const user = await db(userType)
-          .where('username', username);
+          .where('username', username).first();
         return user;
       } catch (error) {
         throw error;

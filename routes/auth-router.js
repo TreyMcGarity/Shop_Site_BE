@@ -15,11 +15,13 @@ router.post('/register', async (req, res, next) => {
         const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
 
+
+        console.log( "\n body:", req.body )
         // check if data is tied to account already
-        if (userName) return res.status(409).json('There is an account with this number already');
+        if (userName) return res.status(409).json('There is an account with this username already');
         if (userEmail) return res.status(409).json('There is an account with this email already');
         if (userPhone) return res.status(409).json('There is an account with this number already');
-
+        
         // depending on user_type add to that database
         switch (user_type) {
             case 'patron':
