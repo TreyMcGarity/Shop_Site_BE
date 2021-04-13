@@ -11,27 +11,27 @@ router.post('/register', async (req, res, next) => {
         // grab from request
         const { user_type } = req.query;
 
-        // db variable has a scope issue due to if statement
+        // depending on user type check if info user exists with similar info, throw error for duplication
         if (user_type === 'patron') {
-            db = patron_db
+            const userName = await patron_db.getByUsername(req.body.username, user_type);
+            const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
+            const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
+       
+            if (userName) return res.status(409).json('There is a patron account with this username already');
+            if (userEmail) return res.status(409).json('There is a patron account with this email already');
+            if (userPhone) return res.status(409).json('There is a patron account with this number already');    
         }
         if (user_type === 'vendor') {
-            db = vendor_db
+            const userName = await vendor_db.getByUsername(req.body.username, user_type);
+            const userEmail = await vendor_db.getUserByEmail(req.body.email, user_type);
+            const userPhone = await vendor_db.getUserByPhone(req.body.phone, user_type);
+       
+            if (userName) return res.status(409).json('There is a vendor account with this username already');
+            if (userEmail) return res.status(409).json('There is a vendor account with this email already');
+            if (userPhone) return res.status(409).json('There is a vendor account with this number already'); 
         }
-        // const type_db = `${user_type}_db`; // not reccognizing the actual db call
-
-        const userName = await type_db.getByUsername(req.body.username, user_type);
-        const userEmail = await type_db.getUserByEmail(req.body.email, user_type);
-        const userPhone = await type_db.getUserByPhone(req.body.phone, user_type);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
 
-
-        console.log( "\n body:", req.body )
-        // check if data is tied to account already
-        if (userName) return res.status(409).json('There is an account with this username already');
-        if (userEmail) return res.status(409).json('There is an account with this email already');
-        if (userPhone) return res.status(409).json('There is an account with this number already');
-        
         // depending on user_type add to that database
         switch (user_type) {
             case 'patron':

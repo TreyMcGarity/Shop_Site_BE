@@ -19,7 +19,7 @@ router.get('/:id', async (req, res, next) => {
     const id = req.id
     const vendor = await vendor_db.getVendorByID(id)
 
-    if(!vendor.id) return res.status(404).json('No items found')
+    if(!vendor.id) return res.status(404).json('No vendor found')
       res.status(200).json(vendor)
   } catch(err) {
     throw err

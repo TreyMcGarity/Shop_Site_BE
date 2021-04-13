@@ -33,6 +33,7 @@ class VendorModel extends UserModel {
                 email: data.email.toLowerCase(),
                 phone: data.phone,
                 dob: data.dob,
+                username: data.username,
                 password: data.password,
                 gender: data.gender
             })

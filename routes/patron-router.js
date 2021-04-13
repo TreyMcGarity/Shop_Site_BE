@@ -19,7 +19,7 @@ router.get('/:id', async (req, res, next) => {
         const id = req.id
         const patron = await patron_db.getPatronByID(id)
 
-        if(!patron.id) return res.status(404).json('No item found')
+        if(!patron.id) return res.status(404).json('No patron found')
         res.status(200).json(patron)
     } catch(err) {
         throw err

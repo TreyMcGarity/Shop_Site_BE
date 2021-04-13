@@ -57,7 +57,9 @@ class UserModel {
                 return data;
               })
           }
-          return await db(userType).where({ id }).first();
+          return await db(userType)
+            .where({ id })
+            .first();
         } catch (error) {
           throw error;
         }
