@@ -16,10 +16,10 @@ class VendorModel extends UserModel {
 
     async getVendorByID(id) {
         try {
-            const Vendor = await getUserById(id, 'vendor')
-            .then(() => {
-                return Vendor
-            })
+            const product = await db('vendor')
+                .where({id: id})
+                .first()
+            return product;
         } catch (error) {
             throw error;
         }
@@ -48,9 +48,8 @@ class VendorModel extends UserModel {
                 .where({id: id})
                 .update(updatedData)
                 .then(data => data);
-            return await this.getUserById(id);
-    } catch(err){
-            throw err;
+    } catch(error){
+            throw error;
         }
     }
 
@@ -59,8 +58,8 @@ class VendorModel extends UserModel {
             return await db('vendor')
                         .where({id})
                         .del();
-        } catch(err){
-            throw(err);
+        } catch(error){
+            throw error;
         }
     }
 }

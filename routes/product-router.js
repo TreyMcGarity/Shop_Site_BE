@@ -1,5 +1,4 @@
 const router = require("express").Router()
-const { JsonWebTokenError } = require("jsonwebtoken")
 const product_db = require('../models/product-model')
 
 
@@ -10,8 +9,8 @@ router.post('/', async (req, res, next) => {
     if (!product.name) res.status(201).json(`creation success, but name found. product id: ${product.id}`)
     await product_db.addProduct(product)
     return res.json('item listed!')
-} catch(err) {
-    throw err
+} catch(error) {
+    throw error
 }
 })
 
@@ -22,8 +21,8 @@ router.get('/', async (req, res, next) => {
 
     if(!products.length) res.status(404).json('No items found')
       res.status(200).json({...products})
-  } catch(err) {
-    throw err
+  } catch(error) {
+    throw error
   }
 })
 
@@ -33,8 +32,8 @@ router.get('/:id', async (req, res, next) => {
 
     if(!product.id) res.status(404).json('No item found')
       res.status(200).json(product)
-  } catch(err) {
-    throw err
+  } catch(error) {
+    throw error
   }
 })
 
@@ -46,7 +45,7 @@ router.put('/:id', async (req, res, next) => {
     
     res.status(200).json(updatedProduct)
   } catch (error) {
-    next(error);
+    throw error;
   }
 })
 
@@ -56,7 +55,7 @@ router.put('/:id', async (req, res, next) => {
       return res
       .json({ message: 'Product was deleted' });
   } catch (error) {
-    next(error);
+    throw error;
   }
 })
 

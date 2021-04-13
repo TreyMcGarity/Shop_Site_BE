@@ -69,7 +69,7 @@ class ProductModel {
                         .where({id})
                         .del();
         } catch(error){
-            throw(error);
+            throw error;
         }
     }
 }

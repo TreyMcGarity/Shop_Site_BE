@@ -9,20 +9,19 @@ router.get('/', async (req, res, next) => {
 
         if(!patrons.length) res.status(404).json('No patrons found')
           res.status(200).json({...patrons})
-    } catch(err) {
-        throw err
+    } catch(error) {
+        throw error
     }
 })
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const id = req.id
-        const patron = await patron_db.getPatronByID(id)
+        const patron = await patron_db.getPatronByID(req.params.id)
 
         if(!patron.id) return res.status(404).json('No patron found')
-        res.status(200).json(patron)
-    } catch(err) {
-        throw err
+          res.status(200).json(patron)
+    } catch(error) {
+        throw error
     }
 })
 
@@ -33,19 +32,19 @@ router.put('/:id', async (req, res, next) => {
 
       res.json(await patron_db.updatePatron(req.params.id, changes));
     } catch (error) {
-      throw err
+      throw error
     }
   })
 
   router.delete('/:id', async (req, res, next) => {
     try {
       await patron_db.deletePatron(req.params.id);
-      req.session.destroy();
+      // req.session.destroy();
       return res
-        .clearCookie('token')
+        // .clearCookie('token')
         .json({ message: 'Vendor account deleted successfully.' });
     } catch (error) {
-      throw err
+      throw error
     }
   })
 

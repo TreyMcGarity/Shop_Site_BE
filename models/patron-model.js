@@ -17,10 +17,10 @@ class PatronModel extends UserModel {
 
     async getPatronByID(id) {
         try {
-            const patron = await getUserById(id, 'patron')
-            .then(() => {
-                return patron
-            })
+            const product = await db('patron')
+                .where({id: id})
+                .first()
+            return product;
         } catch (error) {
             throw error;
         }
@@ -49,9 +49,8 @@ class PatronModel extends UserModel {
                    .where({id: id})
                    .update(updatedData)
                    .then(data => data);
-            return await this.getUserById(id);
-    } catch(err){
-            throw err;
+        } catch(error){
+            throw error;
         }
     }
 
@@ -60,8 +59,8 @@ class PatronModel extends UserModel {
             return await db('patron')
                          .where({id})
                          .del();
-        } catch(err){
-            throw(err);
+        } catch(error){
+            throw(error);
         }
     }
 }

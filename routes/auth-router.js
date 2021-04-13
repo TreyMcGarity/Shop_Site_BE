@@ -1,7 +1,6 @@
 const router = require("express").Router()
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
-const user_db = require('../models/user-model');
 const vendor_db = require('../models/vendor-model')
 const patron_db = require('../models/patron-model')
 const httpError = require("http-errors");
@@ -58,9 +57,12 @@ router.post('/login', async (req, res, next) => {
 	try {
         // grab from request
 		const { username, password } = req.body
+
+        //-- need to do similar to register for seperate user types
 		const user = await patron_db.findBy({ username }).first()
         const passwordValid = await bcrypt.compare(password, user.password)
         const token = patron_db.generateToken(user);
+        //--
         // check if input valid
 		if (!user) {
 			return res.status(401).json({ message: "User doesnt exsist yet, please register user" })
