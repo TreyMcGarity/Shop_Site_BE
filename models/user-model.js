@@ -15,7 +15,8 @@ class UserModel {
     async getByUsername(username, userType = 'patron') {
       try {
         const user = await db(userType)
-          .where('username', username).first();
+          .where('username', username)
+          .first();
         return user;
       } catch (error) {
         throw error;
@@ -25,7 +26,8 @@ class UserModel {
     async getUserByEmail(email, userType = 'patron') {
         try {
           const user = await db(userType)
-            .where('email', email.toLowerCase()).first();
+            .where('email', email.toLowerCase())
+            .first();
           return user;
         } catch (error) {
           throw error;
@@ -35,7 +37,8 @@ class UserModel {
       async getUserByPhone(number, userType = 'patron') {
         try {
           const user = await db(userType)
-            .where('phone', number).first();
+            .where('phone', number)
+            .first();
           return user;
         } catch (error) {
           throw error;

@@ -10,9 +10,19 @@ router.post('/register', async (req, res, next) => {
 	try {
         // grab from request
         const { user_type } = req.query;
-        const userName = await patron_db.getByUsername(req.body.username, user_type);
-        const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
-        const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
+
+        // db variable has a scope issue due to if statement
+        if (user_type === 'patron') {
+            db = patron_db
+        }
+        if (user_type === 'vendor') {
+            db = vendor_db
+        }
+        // const type_db = `${user_type}_db`; // not reccognizing the actual db call
+
+        const userName = await type_db.getByUsername(req.body.username, user_type);
+        const userEmail = await type_db.getUserByEmail(req.body.email, user_type);
+        const userPhone = await type_db.getUserByPhone(req.body.phone, user_type);
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
 
 
