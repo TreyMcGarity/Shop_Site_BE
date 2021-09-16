@@ -14,7 +14,7 @@ router.post('/', async (req, res, next) => {
 }
 })
 
-/* Get Product routes */
+/* Get Products routes */
 router.get('/', async (req, res, next) => {
   try {
     const products = await product_db.getAllProducts()
@@ -26,11 +26,34 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:category', async (req, res, next) => {
+  try {
+    const products = await product_db.getProductsByCategory(req.params.category)
+
+    if(!products.length) res.status(404).json('No items found')
+      res.status(200).json({...products})
+  } catch(error) {
+    throw error
+  }
+})
+
+/* Get Product routes */
 router.get('/:id', async (req, res, next) => {
   try {
     const product = await product_db.getProductByID(req.params.id)
 
     if(!product.id) res.status(404).json('No item found')
+      res.status(200).json(product)
+  } catch(error) {
+    throw error
+  }
+})
+
+router.get('/:name', async (req, res, next) => {
+  try {
+    const product = await product_db.getProductByID(req.params.name)
+
+    if(!product.name) res.status(404).json('No item found')
       res.status(200).json(product)
   } catch(error) {
     throw error

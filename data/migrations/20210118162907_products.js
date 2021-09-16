@@ -3,7 +3,7 @@ exports.up = async function(knex) {
 	return knex.schema.createTable("product", (tbl) => {
 		tbl.uuid("id").primary().defaultTo(knex.raw("uuid_generate_v4()"));
 		tbl.string("name", 20).notNull();
-		tbl.string("product_type", 20).notNull();
+		tbl.string("category", 20).notNull();
 		tbl.string("details");
         tbl.integer("cost").notNull();
         tbl.integer("stock");

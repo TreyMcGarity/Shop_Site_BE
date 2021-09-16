@@ -6,13 +6,34 @@ class ProductModel {
           return await db('product').select(
             'id',
             'name',
+            'category',
+            'details',
             'cost',
             'stock',
-            'details',
             'product_pic_id'
           );
         } catch (error) {
           throw error;
+        }
+    }
+
+    async getProductsByCategory(category) {
+        try {
+            return await db('product')
+            .where('category', category)
+            .select(
+                'id',
+                'name',
+                'category',
+                'details',
+                'cost',
+                'stock',
+                'product_pic_id'
+                
+            );
+
+        } catch (error) {
+            throw error;
         }
     }
 
