@@ -29,7 +29,6 @@ class ProductModel {
                 'cost',
                 'stock',
                 'product_pic_id'
-                
             );
 
         } catch (error) {
@@ -40,7 +39,7 @@ class ProductModel {
     async getProductByID(id) {
         try {
             const product = await db('product')
-                .where('id', id)
+                .where({id: id})
                 .first()
             return product;
         } catch (error) {
@@ -51,7 +50,7 @@ class ProductModel {
     async getProductByName(name) {
         try {
             const product = await db('product')
-                .where('name', name)
+                .where({name: name})
                 .first()
             return product;
         } catch (error) {
@@ -63,10 +62,11 @@ class ProductModel {
         try {
             await db('product').insert({
                 name: data.name,
-                product_type: data.product_type,
+                category: data.category,
                 details: data.details,
                 cost: data.cost,
-                stock: data.stock
+                stock: data.stock,
+                product_pic_id: data.product_pic_id
             })
         } catch (error) {
             throw error;
@@ -87,7 +87,7 @@ class ProductModel {
     async deleteProduct(id){
         try{
             return await db('product')
-                        .where({id})
+                        .where({id: id})
                         .del();
         } catch(error){
             throw error;

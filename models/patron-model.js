@@ -17,10 +17,10 @@ class PatronModel extends UserModel {
 
     async getPatronByID(id) {
         try {
-            const product = await db('patron')
+            const patron = await db('patron')
                 .where({id: id})
                 .first()
-            return product;
+            return patron;
         } catch (error) {
             throw error;
         }

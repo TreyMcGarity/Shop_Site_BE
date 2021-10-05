@@ -6,7 +6,7 @@ const product_db = require('../models/product-model')
 router.post('/', async (req, res, next) => {
   try {
     const product = {...req.body}
-    if (!product.name) res.status(201).json(`creation success, but name found. product id: ${product.id}`)
+    if (!product.name) res.status(201).json(`creation success, but shares name. duplicate product id: ${product.id}`)
     await product_db.addProduct(product)
     return res.json('item listed!')
 } catch(error) {
@@ -19,7 +19,9 @@ router.get('/', async (req, res, next) => {
   try {
     const products = await product_db.getAllProducts()
 
-    if(!products.length) res.status(404).json('No items found')
+    if (!products.length) {
+      res.status(404).json('No items found')
+    }
       res.status(200).json({...products})
   } catch(error) {
     throw error

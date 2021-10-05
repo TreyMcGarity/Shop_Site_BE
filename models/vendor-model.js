@@ -3,7 +3,7 @@ const UserModel = require('./user-model');
 
 class VendorModel extends UserModel {
     /* Owner side of Website:
-    Owners have accounts and add products to Vendor side of App.
+    Owners have accounts and add products to Vendor side of site.
     */
 
     async getAllVendors() {
@@ -16,10 +16,10 @@ class VendorModel extends UserModel {
 
     async getVendorByID(id) {
         try {
-            const product = await db('vendor')
+            const vendor = await db('vendor')
                 .where({id: id})
                 .first()
-            return product;
+            return vendor;
         } catch (error) {
             throw error;
         }
