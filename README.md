@@ -1,8 +1,5 @@
 # ShoppingSite (Decorem)
-Concept for our retro decor and apparel shopping site. (on hold atm)
-
-## Designing Layout
-DB Design: https://app.dbdesigner.net/designer/schema/351162 <br>
+Concept for our retro decor and apparel shopping site. 
 
 ## Dependencies
 ### Front-end:
