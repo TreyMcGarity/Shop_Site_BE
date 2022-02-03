@@ -51,16 +51,16 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.get('/:name', async (req, res, next) => {
-  try {
-    const product = await product_db.getProductByName(req.params.name)
+// router.get('/:name', async (req, res, next) => {
+//   try {
+//     const product = await product_db.getProductByName(req.params.name)
 
-    if(!product.name) res.status(404).json('No item found')
-      res.status(200).json(product)
-  } catch(error) {
-    throw error
-  }
-})
+//     if(!product.name) res.status(404).json('No item found')
+//       res.status(200).json(product)
+//   } catch(error) {
+//     throw error
+//   }
+// })
 
 /* Edit Product routes */
 router.put('/:id', async (req, res, next) => {

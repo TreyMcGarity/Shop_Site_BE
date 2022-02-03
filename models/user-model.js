@@ -8,10 +8,6 @@ class UserModel {
    
     // userType aids in specifing with database to access
 
-    async findBy(filter, userType = 'patron') {
-      return db(userType).where(filter);
-    }
-
     async getByUsername(username, userType = 'patron') {
       try {
         const user = await db(userType)
@@ -83,6 +79,8 @@ class UserModel {
       } catch (error) {
         throw error;
       }
+
+      /* Generate a Token */
     }
 }
 

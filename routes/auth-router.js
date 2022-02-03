@@ -1,9 +1,10 @@
 const router = require("express").Router()
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
+const user_db = require('../models/user-model')
 const vendor_db = require('../models/vendor-model')
 const patron_db = require('../models/patron-model')
-const httpError = require("http-errors");
+const httpError = require("http-errors")
 
 router.post('/register', async (req, res, next) => {
 	try {
@@ -16,18 +17,18 @@ router.post('/register', async (req, res, next) => {
             const userEmail = await patron_db.getUserByEmail(req.body.email, user_type);
             const userPhone = await patron_db.getUserByPhone(req.body.phone, user_type);
        
-            if (userName) return res.status(409).json('There is a patron account with this username already');
-            if (userEmail) return res.status(409).json('There is a patron account with this email already');
-            if (userPhone) return res.status(409).json('There is a patron account with this number already');    
+            if (userName) return res.status(409).json('There is an account with this username already');
+            if (userEmail) return res.status(409).json('There is an account account with this email already');
+            if (userPhone) return res.status(409).json('There is an account account with this number already');    
         }
         if (user_type === 'vendor') {
             const userName = await vendor_db.getByUsername(req.body.username, user_type);
             const userEmail = await vendor_db.getUserByEmail(req.body.email, user_type);
             const userPhone = await vendor_db.getUserByPhone(req.body.phone, user_type);
        
-            if (userName) return res.status(409).json('There is a vendor account with this username already');
-            if (userEmail) return res.status(409).json('There is a vendor account with this email already');
-            if (userPhone) return res.status(409).json('There is a vendor account with this number already'); 
+            if (userName) return res.status(409).json('There is an account with this username already');
+            if (userEmail) return res.status(409).json('There is an account with this email already');
+            if (userPhone) return res.status(409).json('There is an account with this number already'); 
         }
         const hashedPassword = await bcrypt.hash(req.body.password, 14);
 
@@ -54,27 +55,20 @@ router.post('/register', async (req, res, next) => {
 })
 
 router.post('/login', async (req, res, next) => {
-	try {
-        // grab from request
-		const { username, password } = req.body
-
-        //-- need to do similar to register for seperate user types
-		const user = await patron_db.findBy({ username }).first()
+    try {
+        const { username, password } = req.body
+		const user = await patron_db.getByUsername(username)
         const passwordValid = await bcrypt.compare(password, user.password)
-        const token = patron_db.generateToken(user);
-        //--
-        // check if input valid
-		if (!user) {
-			return res.status(401).json({ message: "User doesnt exsist yet, please register user" })
-		}	
-		if (!passwordValid) {
-			return res.status(401).json({ message: "Invalid password" })
-		}
-		res.status(200)
-            .json({ message: `Welcome ${user.username}`, token })
-	} catch(err) {
-		next(err)
-	}
+
+        if (!user) {return res.status(401).json({ message: "Incorrect username or user doesnt exist and must be created" })}	
+		if (!passwordValid) {return res.status(401).json({ message: "Invalid password" })}
+
+        const token = jwt.sign(user, process.env.JWT_SECERET)
+
+        res.status(200).cookie("token",token).json({message:`welcome ${user.username}`, token:token})
+        } catch(err) {
+            next(err)
+        }
 })
 
 router.post('/logout', async (req, res, next) => {
@@ -85,7 +79,5 @@ router.post('/logout', async (req, res, next) => {
 		next(error);
 	}
 })
-
-router.get('/verify_session', (req, res) => res.status(200).json('Verified'));
 
 module.exports = router;
