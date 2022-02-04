@@ -9,6 +9,7 @@ const httpError = require("http-errors")
 router.post('/register', async (req, res, next) => {
 	try {
         // grab from request
+        console.log(req.query)
         const { user_type } = req.query;
 
         // depending on user type check if info user exists with similar info, throw error for duplication
@@ -57,11 +58,11 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         const { username, password } = req.body
-		const user = await patron_db.getByUsername(username)
+        const user = await patron_db.getByUsername(username)
         const passwordValid = await bcrypt.compare(password, user.password)
 
-        if (!user) {return res.status(401).json({ message: "Incorrect username or user doesnt exist and must be created" })}	
-		if (!passwordValid) {return res.status(401).json({ message: "Invalid password" })}
+        if (!user) return res.status(401).json({ message: "Incorrect username or user doesnt exist and must be created" })
+		if (!passwordValid) return res.status(401).json({ message: "Invalid password" })
 
         const token = jwt.sign(user, process.env.JWT_SECERET)
 
