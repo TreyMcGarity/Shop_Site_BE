@@ -6,11 +6,11 @@ class UserModel {
     Gets by different account info and possibly social sites
     */
    
-    // userType aids in specifing with database to access
+    // user_type aids in specifing with database to access
 
-    async getByUsername(username, userType = 'patron') {
+    async getByUsername(username, user_type) {
       try {
-        const user = await db(userType)
+        const user = await db(user_type)
           .where('username', username)
           .first();
         return user;
@@ -19,9 +19,9 @@ class UserModel {
       }
     }
 
-    async getUserByEmail(email, userType = 'patron') {
+    async getUserByEmail(email, user_type) {
         try {
-          const user = await db(userType)
+          const user = await db(user_type)
             .where('email', email.toLowerCase())
             .first();
           return user;
@@ -30,9 +30,9 @@ class UserModel {
         }
       }
     
-      async getUserByPhone(number, userType = 'patron') {
+      async getUserByPhone(number, user_type) {
         try {
-          const user = await db(userType)
+          const user = await db(user_type)
             .where('phone', number)
             .first();
           return user;
@@ -41,9 +41,9 @@ class UserModel {
         }
       }
     
-      async getUserById(id, userType = 'patron') {
+      async getUserById(id, user_type) {
         try {
-          if (userType === 'patron') {
+          if (user_type === 'patron') {
             return await db
               .select('*')
               .from('patron')
@@ -53,7 +53,7 @@ class UserModel {
                 return data;
               })
           }
-          return await db(userType)
+          return await db(user_type)
             .where({ id })
             .first();
         } catch (error) {

@@ -2,8 +2,8 @@
 exports.up = async function(knex) {
 	return knex.schema.createTable("patron", (tbl) => {
 		tbl.uuid("id").primary().defaultTo(knex.raw("uuid_generate_v4()"));
-		tbl.string("first_name", 20).notNull();
-		tbl.string("last_name", 20).notNull();
+		tbl.string("first_name", 20);
+		tbl.string("last_name", 20);
 		tbl.string("email").unique();
 		tbl.bigInteger("phone", 10).unique();
 		tbl.date("dob");

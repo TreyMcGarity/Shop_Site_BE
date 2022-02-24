@@ -1,17 +1,14 @@
 const router = require("express").Router()
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
-const user_db = require('../models/user-model')
 const vendor_db = require('../models/vendor-model')
 const patron_db = require('../models/patron-model')
 const httpError = require("http-errors")
 
 router.post('/register', async (req, res, next) => {
 	try {
-        // grab from request
-        console.log(req.query)
+        // grab from user_type from request
         const { user_type } = req.query;
-
         // depending on user type check if info user exists with similar info, throw error for duplication
         if (user_type === 'patron') {
             const userName = await patron_db.getByUsername(req.body.username, user_type);
@@ -57,16 +54,33 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
     try {
+        // grab from user_type from request
+        const { user_type } = req.query;
         const { username, password } = req.body
-        const user = await patron_db.getByUsername(username)
-        const passwordValid = await bcrypt.compare(password, user.password)
 
-        if (!user) return res.status(401).json({ message: "Incorrect username or user doesnt exist and must be created" })
-		if (!passwordValid) return res.status(401).json({ message: "Invalid password" })
+        if (user_type === 'patron') {
+            const user = await patron_db.getByUsername(username, 'patron')
+            const passwordValid = await bcrypt.compare(password, user.password)
+    
+            if (!user) return res.status(401).json({ message: "Incorrect username or user doesnt exist and must be created" })
+            if (!passwordValid) return res.status(401).json({ message: "Invalid password" })
+    
+            const token = jwt.sign(user, process.env.JWT_SECERET)
+    
+            res.status(200).cookie("token",token).json({message:`welcome ${user.username}`, token:token})
+        
+        } else if (user_type === 'vendor') {
+            const user = await vendor_db.getByUsername(username, 'vendor')
+            const passwordValid = await bcrypt.compare(password, user.password)
+    
+            if (!user) return res.status(401).json({ message: "Incorrect username or user doesnt exist and must be created" })
+            if (!passwordValid) return res.status(401).json({ message: "Invalid password" })
+    
+            const token = jwt.sign(user, process.env.JWT_SECERET)
+    
+            res.status(200).cookie("token",token).json({message:`welcome ${user.username}`, token:token})
+        }
 
-        const token = jwt.sign(user, process.env.JWT_SECERET)
-
-        res.status(200).cookie("token",token).json({message:`welcome ${user.username}`, token:token})
         } catch(err) {
             next(err)
         }

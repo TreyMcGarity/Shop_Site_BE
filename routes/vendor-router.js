@@ -1,7 +1,6 @@
 const router = require("express").Router()
 const vendor_db = require('../models/vendor-model')
 
-
 /* Get Vendor routes */
 router.get('/', async (req, res, next) => {
   try {
