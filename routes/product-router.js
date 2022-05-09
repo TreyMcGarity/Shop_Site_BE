@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
     if (!products.length) {
       res.status(404).json('No items found')
     }
-      res.status(200).json({...products})
+      res.status(200).json([...products])
   } catch(error) {
     throw error
   }

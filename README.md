@@ -1,5 +1,5 @@
 # ShoppingSite (Decorem)
-Concept for our retro decor and apparel shopping site. 
+Concept for our retro decor and apparel ecommerce site. 
 
 ## Dependencies
 ### Front-end:
