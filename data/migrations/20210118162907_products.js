@@ -5,7 +5,7 @@ exports.up = async function(knex) {
 		tbl.string("name", 20).notNull();
 		tbl.string("category", 20).notNull();
 		tbl.string("details");
-        tbl.integer("cost").notNull();
+        tbl.float("cost").notNull();
         tbl.integer("stock");
 		tbl.string("product_pic_id");
 		tbl.timestamp("created_at").defaultTo(knex.fn.now());
