@@ -17,3 +17,6 @@ jsonwebtoken
 knex
 nodemon
 pg (postgres)
+
+
+RESTful API for Shopper & Creator side of the app. item CRUD on Creator side and view and "purchase" of items on Shopper side.
