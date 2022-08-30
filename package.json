@@ -1,5 +1,5 @@
 {
-  "name": "ShoppingSite",
+  "name": "Shop_Site_BE",
   "version": "1.0.0",
   "description": "Concept for our retro decor and apparel shopping site.",
   "main": "index.js",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TreyMcGarity/ShoppingSite.git"
+    "url": "git+https://github.com/TreyMcGarity/Shop_Site_BE.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TreyMcGarity/ShoppingSite/issues"
+    "url": "https://github.com/TreyMcGarity/Shop_Site_BE/issues"
   },
-  "homepage": "https://github.com/TreyMcGarity/ShoppingSite#readme",
+  "homepage": "https:https://github.com/TreyMcGarity/Shop_Site_BE#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",

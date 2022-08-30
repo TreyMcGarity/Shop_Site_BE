@@ -3,7 +3,16 @@ const server = require('./server');
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
-    console.log(`DECOREM is in business | listening on port ${PORT}`);
+    console.log(`
+    *****************************************
+    *           _           /\\  ___
+    *         _( )_         \\ \\(  o)>               
+    *        _(  o)>        (__\\ \\
+    *       (  / )           // \\_\\
+    *     WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    * 
+    * 
+    DECOREM is in business | listening on port ${PORT}`);
 });
 /*
 ──────────────▒███░───░████████▒
