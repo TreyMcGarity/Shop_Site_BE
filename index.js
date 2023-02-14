@@ -4,12 +4,11 @@ const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
     console.log(`
-    *****************************************
-    *           _           /\\  ___
-    *         _( )_         \\ \\(  o)>               
-    *        _(  o)>        (__\\ \\
-    *       (  / )           // \\_\\
-    *     WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    *           _        
+    *         _( )_                     
+    *        _(  o)>     
+    *       (  / )      
+    *     WWWWWWWWWWWWWW
     * 
     * 
     DECOREM is in business | listening on port ${PORT}`);
